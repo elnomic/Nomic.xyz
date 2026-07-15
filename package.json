@@ -1,4 +1,3 @@
-// package.json
 {
   "name": "nomic-dex",
   "private": true,
@@ -13,17 +12,17 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "@hyperliquid/sdk": "^1.0.0",
     "@supabase/supabase-js": "^2.38.0",
-    "viem": "^2.0.0",
-    "wagmi": "^2.0.0",
-    "@tanstack/react-query": "^5.0.0",
+    "viem": "^1.19.0",
+    "wagmi": "^1.4.0",
+    "@tanstack/react-query": "^4.36.0",
     "zustand": "^4.4.0",
     "framer-motion": "^10.16.0",
     "react-hot-toast": "^2.4.0",
     "lightweight-charts": "^4.1.0",
     "clsx": "^2.0.0",
-    "tailwind-merge": "^2.0.0"
+    "tailwind-merge": "^2.0.0",
+    "lucide-react": "^0.292.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.0",
