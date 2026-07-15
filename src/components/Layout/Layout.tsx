@@ -1,4 +1,3 @@
-// src/components/Layout/Layout.tsx
 import { Header } from './Header'
 import { Navigation } from './Navigation'
 
@@ -7,8 +6,10 @@ interface LayoutProps {
 }
 
 export function Layout({ children }: LayoutProps) {
+  console.log('🏗️ Layout rendering...')
+  
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-dark">
       <Header />
       <div className="flex flex-1">
         <Navigation />
