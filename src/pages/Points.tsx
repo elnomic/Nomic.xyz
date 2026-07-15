@@ -1,8 +1,17 @@
-// src/pages/Points.tsx
-export function Points() {
+interface PointsProps {
+  navigate?: (path: string) => void
+}
+
+export function Points({ navigate }: PointsProps) {
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Points</h1>
+    <div>
+      <button 
+        onClick={() => navigate?.('/')}
+        className="mb-4 text-text-secondary hover:text-text-primary"
+      >
+        ← Back to Dashboard
+      </button>
+      <h1 className="text-2xl font-bold mb-4">⭐ Points</h1>
       <p className="text-text-secondary">Points & rewards coming soon...</p>
     </div>
   )
