@@ -5,6 +5,11 @@
 @tailwind utilities;
 
 @layer base {
+  /* Custom breakpoint untuk xs (extra small) */
+  @screen xs {
+    /* 480px ke atas */
+  }
+  
   * {
     margin: 0;
     padding: 0;
@@ -20,9 +25,17 @@
     overflow-x: hidden;
   }
 
+  /* Touch-friendly untuk mobile */
+  button, 
+  input, 
+  select, 
+  textarea {
+    @apply touch-manipulation;
+  }
+
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 4px;
+    height: 4px;
   }
 
   ::-webkit-scrollbar-track {
@@ -44,15 +57,15 @@
   }
 
   .btn-primary {
-    @apply bg-primary hover:bg-primary/80 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply bg-primary hover:bg-primary/80 active:bg-primary/60 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .btn-success {
-    @apply bg-success hover:bg-success/80 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-200;
+    @apply bg-success hover:bg-success/80 active:bg-success/60 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-200;
   }
 
   .btn-danger {
-    @apply bg-danger hover:bg-danger/80 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-200;
+    @apply bg-danger hover:bg-danger/80 active:bg-danger/60 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-200;
   }
 
   .input-primary {
@@ -61,5 +74,16 @@
 
   .card-hover {
     @apply transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5;
+  }
+
+  /* Utility untuk touch target (min 44px) */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+}
+
+@layer utilities {
+  .touch-manipulation {
+    touch-action: manipulation;
   }
 }
