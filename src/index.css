@@ -1,4 +1,3 @@
-/* src/index.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap');
 
 @tailwind base;
@@ -63,4 +62,4 @@
   .card-hover {
     @apply transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5;
   }
-    }
+}
