@@ -1,23 +1,17 @@
 import { Header } from './Header'
-import { Navigation } from './Navigation'
 
 interface LayoutProps {
   children: React.ReactNode
+  onNavigate?: (path: string) => void
+  activePath?: string
 }
 
-export function Layout({ children }: LayoutProps) {
-  console.log('🏗️ Layout rendering...')
-  
+export function Layout({ children, onNavigate, activePath }: LayoutProps) {
   return (
-    <div className="flex flex-col min-h-screen bg-dark">
-      <Header />
+    <div className="flex flex-col min-h-screen">
+      <Header onNavigate={onNavigate} activePath={activePath} />
       <div className="flex flex-1">
-        <Navigation />
-        <main className="flex-1 p-6 overflow-auto">
-          <div className="max-w-7xl mx-auto">
-            {children}
-          </div>
-        </main>
+        {children}
       </div>
     </div>
   )
