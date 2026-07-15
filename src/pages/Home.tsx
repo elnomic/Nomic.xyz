@@ -1,12 +1,20 @@
 interface HomeProps {
-  navigate?: (path: string) => void
+  navigate?: (page: string) => void
 }
 
 export function Home({ navigate }: HomeProps) {
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Dashboard</h1>
-      
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-bold">Dashboard</h1>
+        <button 
+          onClick={() => navigate?.('trade')}
+          className="btn-primary text-sm py-2 px-6"
+        >
+          Trade Now →
+        </button>
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="glass-panel p-6">
           <p className="text-text-secondary text-sm">Total Equity</p>
@@ -50,13 +58,6 @@ export function Home({ navigate }: HomeProps) {
           </div>
         </div>
       </div>
-
-      <button 
-        onClick={() => navigate?.('/trade')}
-        className="btn-primary w-full sm:w-auto py-3 px-8 text-lg"
-      >
-        🚀 Start Trading
-      </button>
     </div>
   )
 }
