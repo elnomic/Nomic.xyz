@@ -1,9 +1,26 @@
 import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
 
-export function Header() {
+interface HeaderProps {
+  onNavigate?: (path: string) => void
+  activePath?: string
+}
+
+export function Header({ onNavigate, activePath = '/' }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   
+  const menuItems = [
+    { label: 'Dashboard', path: '/' },
+    { label: 'Trade', path: '/trade' },
+    { label: 'Portfolio', path: '/portfolio' },
+    { label: 'Points', path: '/points' },
+  ]
+
+  const handleNavigate = (path: string) => {
+    onNavigate?.(path)
+    setIsMobileMenuOpen(false)
+  }
+
   return (
     <header className="bg-surface/80 backdrop-blur-sm border-b border-white/5 px-4 sm:px-6 py-3 sm:py-4 sticky top-0 z-50">
       <div className="flex items-center justify-between max-w-7xl mx-auto">
@@ -27,11 +44,22 @@ export function Header() {
       {isMobileMenuOpen && (
         <div className="lg:hidden mt-3 pt-3 border-t border-white/5">
           <div className="grid grid-cols-4 gap-2">
-            {['Dashboard', 'Trade', 'Portfolio', 'Points'].map((item) => (
-              <button key={item} className="py-2.5 text-sm text-text-secondary hover:text-text-primary bg-surface-elevated/50 rounded-lg touch-target">
-                {item}
-              </button>
-            ))}
+            {menuItems.map((item) => {
+              const isActive = activePath === item.path
+              return (
+                <button
+                  key={item.label}
+                  onClick={() => handleNavigate(item.path)}
+                  className={`py-2.5 text-sm rounded-lg touch-target transition-all ${
+                    isActive
+                      ? 'bg-primary/20 text-primary border border-primary/20'
+                      : 'text-text-secondary hover:text-text-primary bg-surface-elevated/50'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              )
+            })}
           </div>
           <button className="w-full mt-3 btn-primary text-sm py-2.5 touch-target">
             Connect Wallet
