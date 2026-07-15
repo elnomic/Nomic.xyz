@@ -1,71 +1,48 @@
 import { useState, useEffect } from 'react'
-
-// Import semua halaman
 import { Home } from './pages/Home'
 import { Trade } from './pages/Trade'
 import { Portfolio } from './pages/Portfolio'
 import { Points } from './pages/Points'
 
 function App() {
-  // State untuk halaman aktif
   const [currentPage, setCurrentPage] = useState('home')
 
-  // Cek URL saat pertama kali load
   useEffect(() => {
     const path = window.location.pathname
-    console.log('📍 Current path:', path)
-    
     if (path === '/trade') setCurrentPage('trade')
     else if (path === '/portfolio') setCurrentPage('portfolio')
     else if (path === '/points') setCurrentPage('points')
     else setCurrentPage('home')
   }, [])
 
-  // Fungsi navigasi
   const navigate = (page: string) => {
-    console.log('🔀 Navigating to:', page)
     setCurrentPage(page)
-    
-    // Update URL
     let path = '/'
     if (page === 'trade') path = '/trade'
     else if (page === 'portfolio') path = '/portfolio'
     else if (page === 'points') path = '/points'
-    
     window.history.pushState({}, '', path)
   }
 
-  // Render halaman berdasarkan state
   const renderPage = () => {
-    console.log('📄 Rendering page:', currentPage)
-    
     switch (currentPage) {
-      case 'trade':
-        return <Trade navigate={navigate} />
-      case 'portfolio':
-        return <Portfolio navigate={navigate} />
-      case 'points':
-        return <Points navigate={navigate} />
-      default:
-        return <Home navigate={navigate} />
+      case 'trade': return <Trade navigate={navigate} />
+      case 'portfolio': return <Portfolio navigate={navigate} />
+      case 'points': return <Points navigate={navigate} />
+      default: return <Home navigate={navigate} />
     }
   }
 
   return (
     <div className="min-h-screen bg-dark">
-      {/* NAVBAR - Fixed di atas */}
+      {/* NAVBAR */}
       <nav className="bg-surface border-b border-white/10 px-4 py-3 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          {/* Logo */}
-          <div 
-            onClick={() => navigate('home')}
-            className="flex items-center gap-2 cursor-pointer"
-          >
+          <div onClick={() => navigate('home')} className="flex items-center gap-2 cursor-pointer">
             <span className="text-xl font-bold text-primary">Nomic</span>
             <span className="text-[10px] text-text-secondary bg-primary/10 px-2 py-0.5 rounded">Beta</span>
           </div>
 
-          {/* Menu */}
           <div className="flex gap-1 sm:gap-2">
             {[
               { id: 'home', label: 'Dashboard' },
@@ -87,7 +64,6 @@ function App() {
             ))}
           </div>
 
-          {/* Wallet Button */}
           <button className="btn-primary text-sm py-1.5 px-4">
             Connect Wallet
           </button>
