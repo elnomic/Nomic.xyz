@@ -1,97 +1,105 @@
 import { useState, useEffect } from 'react'
+
+// Import semua halaman
 import { Home } from './pages/Home'
 import { Trade } from './pages/Trade'
 import { Portfolio } from './pages/Portfolio'
 import { Points } from './pages/Points'
 
-export default function App() {
-  const [page, setPage] = useState('home')
+function App() {
+  // State untuk halaman aktif
+  const [currentPage, setCurrentPage] = useState('home')
 
+  // Cek URL saat pertama kali load
   useEffect(() => {
-    // Cek URL saat pertama kali load
     const path = window.location.pathname
-    if (path === '/trade') setPage('trade')
-    else if (path === '/portfolio') setPage('portfolio')
-    else if (path === '/points') setPage('points')
-    else setPage('home')
+    console.log('📍 Current path:', path)
+    
+    if (path === '/trade') setCurrentPage('trade')
+    else if (path === '/portfolio') setCurrentPage('portfolio')
+    else if (path === '/points') setCurrentPage('points')
+    else setCurrentPage('home')
   }, [])
 
-  const navigate = (path: string) => {
+  // Fungsi navigasi
+  const navigate = (page: string) => {
+    console.log('🔀 Navigating to:', page)
+    setCurrentPage(page)
+    
+    // Update URL
+    let path = '/'
+    if (page === 'trade') path = '/trade'
+    else if (page === 'portfolio') path = '/portfolio'
+    else if (page === 'points') path = '/points'
+    
     window.history.pushState({}, '', path)
-    setPage(path === '/' ? 'home' : path.slice(1))
   }
 
-  // Render page
-  let Page
-  switch (page) {
-    case 'trade':
-      Page = Trade
-      break
-    case 'portfolio':
-      Page = Portfolio
-      break
-    case 'points':
-      Page = Points
-      break
-    default:
-      Page = Home
+  // Render halaman berdasarkan state
+  const renderPage = () => {
+    console.log('📄 Rendering page:', currentPage)
+    
+    switch (currentPage) {
+      case 'trade':
+        return <Trade navigate={navigate} />
+      case 'portfolio':
+        return <Portfolio navigate={navigate} />
+      case 'points':
+        return <Points navigate={navigate} />
+      default:
+        return <Home navigate={navigate} />
+    }
   }
 
   return (
     <div className="min-h-screen bg-dark">
-      {/* Navbar */}
+      {/* NAVBAR - Fixed di atas */}
       <nav className="bg-surface border-b border-white/10 px-4 py-3 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <span 
-            onClick={() => navigate('/')}
-            className="text-xl font-bold text-primary cursor-pointer"
+          {/* Logo */}
+          <div 
+            onClick={() => navigate('home')}
+            className="flex items-center gap-2 cursor-pointer"
           >
-            Nomic
-          </span>
-          <div className="flex gap-2 sm:gap-4">
-            <button 
-              onClick={() => navigate('/')}
-              className={`px-3 py-1 rounded-lg text-sm transition ${
-                page === 'home' ? 'bg-primary/20 text-primary' : 'text-text-secondary hover:text-white'
-              }`}
-            >
-              Dashboard
-            </button>
-            <button 
-              onClick={() => navigate('/trade')}
-              className={`px-3 py-1 rounded-lg text-sm transition ${
-                page === 'trade' ? 'bg-primary/20 text-primary' : 'text-text-secondary hover:text-white'
-              }`}
-            >
-              Trade
-            </button>
-            <button 
-              onClick={() => navigate('/portfolio')}
-              className={`px-3 py-1 rounded-lg text-sm transition ${
-                page === 'portfolio' ? 'bg-primary/20 text-primary' : 'text-text-secondary hover:text-white'
-              }`}
-            >
-              Portfolio
-            </button>
-            <button 
-              onClick={() => navigate('/points')}
-              className={`px-3 py-1 rounded-lg text-sm transition ${
-                page === 'points' ? 'bg-primary/20 text-primary' : 'text-text-secondary hover:text-white'
-              }`}
-            >
-              Points
-            </button>
+            <span className="text-xl font-bold text-primary">Nomic</span>
+            <span className="text-[10px] text-text-secondary bg-primary/10 px-2 py-0.5 rounded">Beta</span>
           </div>
-          <button className="btn-primary text-sm py-1 px-3 sm:px-4">
-            Connect
+
+          {/* Menu */}
+          <div className="flex gap-1 sm:gap-2">
+            {[
+              { id: 'home', label: 'Dashboard' },
+              { id: 'trade', label: 'Trade' },
+              { id: 'portfolio', label: 'Portfolio' },
+              { id: 'points', label: 'Points' },
+            ].map((item) => (
+              <button
+                key={item.id}
+                onClick={() => navigate(item.id)}
+                className={`px-3 py-1.5 rounded-lg text-sm transition-all ${
+                  currentPage === item.id
+                    ? 'bg-primary/20 text-primary border border-primary/20'
+                    : 'text-text-secondary hover:text-text-primary hover:bg-surface-elevated'
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Wallet Button */}
+          <button className="btn-primary text-sm py-1.5 px-4">
+            Connect Wallet
           </button>
         </div>
       </nav>
 
-      {/* Content */}
+      {/* CONTENT */}
       <main className="max-w-7xl mx-auto p-4">
-        <Page navigate={navigate} />
+        {renderPage()}
       </main>
     </div>
   )
 }
+
+export default App
