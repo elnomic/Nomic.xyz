@@ -24,7 +24,10 @@ export function Header({ onNavigate, activePath = '/' }: HeaderProps) {
   return (
     <header className="bg-surface/80 backdrop-blur-sm border-b border-white/5 px-4 sm:px-6 py-3 sm:py-4 sticky top-0 z-50">
       <div className="flex items-center justify-between max-w-7xl mx-auto">
-        <div className="flex items-center gap-2">
+        <div 
+          className="flex items-center gap-2 cursor-pointer"
+          onClick={() => handleNavigate('/')}
+        >
           <span className="text-xl sm:text-2xl font-bold text-primary">Nomic</span>
           <span className="text-[10px] sm:text-xs text-text-secondary bg-primary/10 px-1.5 sm:px-2 py-0.5 rounded">Beta</span>
         </div>
