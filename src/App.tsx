@@ -1,14 +1,25 @@
+import { useState } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { Layout } from './components/Layout/Layout'
-import { Dashboard } from './pages/Dashboard'
-
-console.log('🔧 App component rendering...')
+import { Navigation } from './components/Layout/Navigation'
+import { routes, RoutePath } from './router'
 
 function App() {
+  const [currentPath, setCurrentPath] = useState<RoutePath>('/')
+  
+  const PageComponent = routes[currentPath] || routes['/']
+
   return (
-    <div className="min-h-screen bg-dark">
+    <div className="flex flex-col min-h-screen bg-dark">
       <Layout>
-        <Dashboard />
+        <div className="flex flex-1">
+          <Navigation activePath={currentPath} onNavigate={(path) => setCurrentPath(path as RoutePath)} />
+          <main className="flex-1 p-3 sm:p-4 md:p-6 overflow-auto">
+            <div className="max-w-7xl mx-auto">
+              <PageComponent />
+            </div>
+          </main>
+        </div>
       </Layout>
       <Toaster 
         position="top-right"
