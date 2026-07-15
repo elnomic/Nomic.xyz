@@ -1,20 +1,14 @@
-// src/App.tsx
 import { Toaster } from 'react-hot-toast'
 import { Layout } from './components/Layout/Layout'
 import { Dashboard } from './pages/Dashboard'
-import { Trade } from './pages/Trade'
-import { Portfolio } from './pages/Portfolio'
-import { Points } from './pages/Points'
+
+console.log('🔧 App component rendering...')
 
 function App() {
   return (
     <div className="min-h-screen bg-dark">
       <Layout>
         <Dashboard />
-        {/* Uncomment untuk navigasi */}
-        {/* <Trade /> */}
-        {/* <Portfolio /> */}
-        {/* <Points /> */}
       </Layout>
       <Toaster 
         position="top-right"
