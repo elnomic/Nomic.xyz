@@ -1,7 +1,11 @@
 import { useState } from 'react'
-import { ArrowUp, ArrowDown, Settings } from 'lucide-react'
+import { ArrowUp, ArrowDown, ArrowLeft } from 'lucide-react'
 
-export function Trade() {
+interface TradeProps {
+  onNavigate?: (path: string) => void
+}
+
+export function Trade({ onNavigate }: TradeProps) {
   const [selectedPair, setSelectedPair] = useState('BTC')
   const [leverage, setLeverage] = useState(10)
   const [amount, setAmount] = useState('')
@@ -16,30 +20,38 @@ export function Trade() {
 
   return (
     <div className="space-y-4">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+      {/* Back Button & Header */}
+      <div className="flex items-center gap-3">
+        <button 
+          onClick={() => onNavigate?.('/')}
+          className="p-2 rounded-lg bg-surface hover:bg-surface-elevated transition-all"
+        >
+          <ArrowLeft className="w-5 h-5" />
+        </button>
         <h1 className="text-xl sm:text-2xl font-bold">Trade</h1>
-        <div className="flex gap-2 w-full sm:w-auto overflow-x-auto pb-2 sm:pb-0">
-          {pairs.map((pair) => (
-            <button
-              key={pair.symbol}
-              onClick={() => setSelectedPair(pair.symbol)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg whitespace-nowrap transition-all ${
-                selectedPair === pair.symbol
-                  ? 'bg-primary/20 border border-primary text-text-primary'
-                  : 'bg-surface border border-transparent text-text-secondary hover:bg-surface-elevated'
-              }`}
-            >
-              <span className="font-bold">{pair.symbol}</span>
-              <span className="text-xs text-text-secondary">/USDC</span>
-            </button>
-          ))}
-        </div>
+      </div>
+
+      {/* Pair Selector */}
+      <div className="flex gap-2 overflow-x-auto pb-2">
+        {pairs.map((pair) => (
+          <button
+            key={pair.symbol}
+            onClick={() => setSelectedPair(pair.symbol)}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg whitespace-nowrap transition-all ${
+              selectedPair === pair.symbol
+                ? 'bg-primary/20 border border-primary text-text-primary'
+                : 'bg-surface border border-transparent text-text-secondary hover:bg-surface-elevated'
+            }`}
+          >
+            <span className="font-bold">{pair.symbol}</span>
+            <span className="text-xs text-text-secondary">/USDC</span>
+          </button>
+        ))}
       </div>
 
       {/* Main Trading Area */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
-        {/* Left: Chart (placeholder) */}
+        {/* Left: Chart */}
         <div className="xl:col-span-2 glass-panel p-4 min-h-[300px] flex items-center justify-center">
           <div className="text-center">
             <p className="text-text-secondary">📊 Price Chart</p>
@@ -93,7 +105,7 @@ export function Trade() {
               ))}
             </div>
 
-            {/* Limit Price Input (conditional) */}
+            {/* Limit Price Input */}
             {orderType === 'limit' && (
               <div>
                 <label className="text-xs text-text-secondary">Limit Price</label>
@@ -195,4 +207,4 @@ export function Trade() {
       </div>
     </div>
   )
-            }
+                }
